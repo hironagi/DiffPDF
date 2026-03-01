@@ -33,3 +33,29 @@ python3 -m http.server 4173
 
 - この実装はブラウザ内でページを画像化して比較します（ピクセル差分）。
 - PDF.js はCDNから読み込んでいるため、初回利用時はネットワーク接続が必要です。
+
+## 5. conflict が出たときの解消手順
+
+`This branch has conflicts that must be resolved` が表示された場合は、以下の手順で解消できます。
+
+```bash
+cd /workspace/DiffPDF
+
+# どのファイルが衝突しているか確認
+git status
+
+# 競合マーカーの確認（<<<<<<<, =======, >>>>>>>）
+rg "^(<<<<<<<|=======|>>>>>>>)" -n
+```
+
+競合ファイルを編集して、不要な競合マーカーを削除したら:
+
+```bash
+# 解消したファイルをステージ
+git add <conflict-file>
+
+# 解消コミットを作成
+git commit -m "Resolve merge conflicts"
+```
+
+このリポジトリの現時点の状態では、`git status` は `working tree clean` で、未解消 conflict は検出されません。
